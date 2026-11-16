@@ -21,13 +21,100 @@
 <link rel="apple-touch-icon" sizes="180x180" href="https://funline.sites.tab.bot/brand/funline-icon-180.png">
 <link rel="manifest" href="https://funline.sites.tab.bot/manifest.webmanifest">
 <link rel="preload" href="https://funline.sites.tab.bot/fonts/barlow-800.woff" as="font" type="font/woff" crossorigin>
-<link rel="stylesheet" href="https://funline.sites.tab.bot/styles.css?v=play1">
+<style>
+@font-face{font-family:"Barlow";font-weight:500;font-style:normal;font-display:swap;src:url(https://funline.sites.tab.bot/fonts/barlow-500.woff) format("woff")}
+@font-face{font-family:"Barlow";font-weight:600;font-style:normal;font-display:swap;src:url(https://funline.sites.tab.bot/fonts/barlow-600.woff) format("woff")}
+@font-face{font-family:"Barlow";font-weight:800;font-style:normal;font-display:swap;src:url(https://funline.sites.tab.bot/fonts/barlow-800.woff) format("woff")}
+@font-face{font-family:"Barlow Condensed";font-weight:600;font-style:normal;font-display:swap;src:url(https://funline.sites.tab.bot/fonts/barlowc-600.woff) format("woff")}
+:root{--bg:#0A0B0D;--bg2:#0F1114;--card:#14161A;--line:#24272D;--text:#F4F5F7;--muted:#A3A9B2;--dim:#7D838C;--blue:#1A72E8;--blue-t:#5A9CF2;--red:#EF4444;--lean:-10deg}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:68px;background:var(--bg)}
+body{margin:0;font-family:"Barlow",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-weight:500;color:var(--text);background:var(--bg);line-height:1.5;-webkit-text-size-adjust:100%}
+img{max-width:100%;display:block}
+a{color:inherit}
+h1,h2,h3{font-weight:800;letter-spacing:-.015em}
+:focus-visible{outline:2px solid var(--blue-t);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:-999px;top:0;background:var(--blue);color:#fff;padding:8px 12px;z-index:10}
+.skip:focus{left:8px;top:8px}
+/* header */
+.top{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;padding-top:max(12px,env(safe-area-inset-top));background:rgba(10,11,13,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.brand{display:block;flex:none}
+.brand img{height:30px;width:auto}
+.top nav{display:flex;gap:2px}
+.top nav a{font-family:"Barlow Condensed","Barlow",sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#D7DBE0;text-decoration:none;font-size:15px;padding:8px 9px;position:relative}
+.top nav a:hover{color:#fff}
+.top nav a::after{content:"";position:absolute;left:9px;right:9px;bottom:3px;height:2px;background:var(--red);transform:skewX(var(--lean)) scaleX(0);transform-origin:left;transition:transform .2s}
+.top nav a:hover::after{transform:skewX(var(--lean)) scaleX(1)}
+/* pinstripe divider: blue bar + thin red stripe, launch-cut ends */
+.stripe,.group h2::after,.contact h2::after{content:"";display:block;width:84px;height:9px;margin-top:10px;background:linear-gradient(var(--blue) 0 5px,transparent 5px 6px,var(--red) 6px 9px);clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%)}
+/* hero */
+.hero{position:relative;overflow:hidden;color:#fff;padding:52px 20px 60px;background:radial-gradient(90% 70% at 0% 0%,rgba(26,114,232,.28),transparent 60%),linear-gradient(180deg,#0E1013,var(--bg));border-bottom:1px solid var(--line)}
+.hero::before{content:"";position:absolute;inset:auto -10% 12px 48%;height:40px;background:repeating-linear-gradient(180deg,rgba(255,255,255,.05) 0 2px,transparent 2px 9px);transform:skewX(var(--lean));pointer-events:none}
+.hero>*{position:relative;max-width:900px;margin-left:auto;margin-right:auto}
+.hero-mark{position:absolute!important;right:-70px;top:24px;width:300px;max-width:none;height:auto;opacity:.07;margin:0!important;pointer-events:none}
+.kicker{font-family:"Barlow Condensed","Barlow",sans-serif;font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:14px;color:#E6E8EB;margin-top:0;margin-bottom:14px}
+.kicker.venture::after{content:"";display:block;width:64px;height:4px;margin-top:8px;background:var(--v,var(--red));clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%)}
+.hero h1{font-size:clamp(34px,9vw,58px);line-height:1.04;margin-top:0;margin-bottom:16px;letter-spacing:-.025em}
+.lead{color:var(--muted);font-size:18px;margin-top:0;margin-bottom:28px}
+/* buttons: 10-degree lean, same as the mark */
+.actions{display:flex;flex-wrap:wrap;gap:12px}
+.btn{position:relative;isolation:isolate;display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:10px 22px;color:#fff;font-weight:800;font-size:16px;letter-spacing:.01em;text-decoration:none;text-align:center;background:none;border:0}
+.btn::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--blue);border-radius:5px;transform:skewX(var(--lean));transition:filter .15s,background .15s}
+.btn:hover::before{filter:brightness(1.12)}
+.btn:active{transform:translateY(1px)}
+.btn.ghost::before{background:transparent;border:1.5px solid #3A3F47}
+.btn.ghost:hover::before{border-color:var(--red);filter:none}
+.btn.ghost.light::before{border-color:rgba(255,255,255,.35)}
+.btn.ghost.light:hover::before{border-color:var(--red)}
+/* sections */
+.group{max-width:1100px;margin:0 auto;padding:44px 16px 8px}
+.group h2,.contact h2{font-size:30px;line-height:1.1;margin:0 0 22px}
+.grid{display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:760px){.grid{grid-template-columns:1fr 1fr}}
+@media(min-width:1080px){#websites .grid{grid-template-columns:1fr 1fr 1fr}}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s}
+.card:hover{border-color:#353A42}
+.card::before{content:"";position:absolute;left:0;top:0;width:70px;height:3px;background:var(--blue);clip-path:polygon(0 0,100% 0,calc(100% - 8px) 100%,0 100%);z-index:1}
+.shots{display:flex;justify-content:center;gap:12px;padding:20px 16px 0;background:radial-gradient(80% 90% at 50% 0%,#1C2230,transparent 70%),linear-gradient(180deg,#171A1F,var(--card))}
+.shots img{width:62%;max-width:230px;height:auto;aspect-ratio:480/1039;object-fit:cover;object-position:top;border-radius:18px;border:5px solid #000;box-shadow:0 0 0 1px #2E333B,0 10px 26px rgba(0,0,0,.45);max-height:340px}
+.shots.two img{width:46%}
+.body{padding:18px 18px 20px;display:flex;flex-direction:column;flex:1}
+.tag{display:inline-block;align-self:flex-start;margin:0 0 8px;font-family:"Barlow Condensed","Barlow",sans-serif;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--blue-t);padding:0}
+.tag::before{content:"";display:inline-block;width:14px;height:3px;margin-right:8px;vertical-align:middle;background:var(--red);transform:skewX(var(--lean))}
+.body h3{margin:0 0 6px;font-size:24px;line-height:1.15}
+.desc{margin:0 0 10px;color:var(--muted)}
+.host{margin:0 0 16px;font-size:14px;color:var(--dim);word-break:break-all;font-family:"Barlow Condensed","Barlow",sans-serif;letter-spacing:.04em}
+.body .actions{margin-top:auto}
+.body .btn{flex:1 1 auto}
+/* contact */
+.contact{position:relative;overflow:hidden;background:radial-gradient(70% 90% at 100% 100%,rgba(26,114,232,.22),transparent 60%),var(--bg2);border-top:1px solid var(--line);margin-top:48px;padding:52px 20px 56px;text-align:center}
+.contact h2::after{margin-left:auto;margin-right:auto}
+.contact p{color:var(--muted);max-width:560px;margin:0 auto 26px;font-size:17px}
+.contact-links{display:flex;flex-direction:column;gap:12px;max-width:420px;margin:0 auto}
+.btn.big{min-height:56px;font-size:17px;word-break:break-all}
+/* footer */
+footer{position:relative;display:flex;align-items:center;justify-content:center;gap:12px;padding:26px 16px calc(26px + env(safe-area-inset-bottom));background:#060708;color:var(--dim);font-size:14px;letter-spacing:.02em}
+footer::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--red) 30%,var(--red) 70%,transparent)}
+footer img{width:30px;height:auto;opacity:.9}
+/* payments accepted */
+.payments{max-width:1100px;margin:0 auto;padding:44px 16px 0}
+.payments h2{font-size:30px;line-height:1.1;margin:0 0 14px}
+.payments h2::after{content:"";display:block;width:84px;height:9px;margin-top:10px;background:linear-gradient(var(--blue) 0 5px,transparent 5px 6px,var(--red) 6px 9px);clip-path:polygon(12px 0,100% 0,calc(100% - 12px) 100%,0 100%)}
+.payments p{margin:0 0 16px;color:var(--muted);font-size:17px;max-width:640px}
+.pay-methods{display:flex;flex-wrap:wrap;gap:10px;margin:0;padding:0;list-style:none}
+.pay-methods li{padding:9px 14px;background:var(--card);border:1px solid var(--line);border-radius:10px;font-weight:600;font-size:15px;color:#E6E8EB}
+@media(max-width:380px){.top{padding-left:12px;padding-right:12px}.top nav a{padding:8px 6px;font-size:14px}.top nav a::after{left:6px;right:6px}.brand img{height:25px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+
+.play{display:inline-flex;align-items:center;line-height:0}.play img{height:48px;width:auto;display:block}
+
+</style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="top">
   <a class="brand" href="#top" aria-label="FunLine Development home"><img src="https://funline.sites.tab.bot/brand/funline-lockup.svg" alt="FunLine" width="682" height="158"></a>
-  <nav aria-label="Sections"><a href="#apps">Apps</a><a href="#websites">Websites</a><a href="#contact">Contact</a></nav>
+  <nav aria-label="Sections"><a href="#apps">Apps</a><a href="#websites">Websites</a><a href="#payments">Payments</a><a href="#contact">Contact</a></nav>
 </header>
 <main id="main">
 <section class="hero" id="top">
@@ -82,6 +169,16 @@
 <section class="group" id="websites" aria-labelledby="web-h">
   <h2 id="web-h">Websites</h2>
   <div class="grid">
+<article class="card" id="origfades">
+  <div class="shots"><img src="img/originalfades-1.jpg" alt="Original Fades Barbershop home page" width="480" height="1040" loading="lazy" decoding="async"></div>
+  <div class="body">
+    <p class="tag">Website</p>
+    <h3>Original Fades Barbershop</h3>
+    <p class="desc">One-page site for a Waco barbershop: services, barbers and booking, live on its own domain. Client photos are being added now.</p>
+    <p class="host">originalfadeswaco.com</p>
+    <div class="actions"><a class="btn" href="https://originalfadeswaco.com" target="_blank" rel="noopener">Open Original Fades</a></div>
+  </div>
+</article>
 <article class="card" id="dainty">
   <div class="shots two"><img src="https://funline.sites.tab.bot/img/dainty-1.jpg" alt="Dainty Daisies home page" width="480" height="1039" loading="lazy" decoding="async"><img src="https://funline.sites.tab.bot/img/dainty-2.jpg" alt="Dainty Daisies how it works and prices" width="480" height="1039" loading="lazy" decoding="async"></div>
   <div class="body">
@@ -120,8 +217,9 @@
     <a class="btn big ghost light" href="mailto:funlineindustries@gmail.com?subject=Quote%20request%20%2F%20card%20payment">Request a card payment link (Square)</a>
   </div>
   <ul class="pay-methods" aria-label="Payments accepted">
-    <li>Credit/debit card</li><li>Apple Pay</li><li>Google Pay</li><li>Cash App</li>
+    <li>Cash App</li><li>PayPal</li><li>Zelle</li><li>Apple Cash</li><li>Credit/debit card</li><li>Apple Pay</li><li>Google Pay</li>
   </ul>
+  <p class="pay-note">Zelle, PayPal and Apple Cash: text me and I'll send the details for the one you want to use.</p>
 </section>
 <section class="contact" id="contact" aria-labelledby="contact-h">
   <h2 id="contact-h">Get a website or app</h2>
